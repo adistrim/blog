@@ -42,3 +42,21 @@ export function getBrief(content: string, maxLength = 200): string {
 
   return truncateText(cleaned, maxLength);
 }
+
+// Strip basic markdown syntax for a plain-text excerpt fallback.
+export function makeBrief(content: string, maxLen = 120): string {
+  const plain = content
+    .replace(/!\[.*?\]\(.*?\)/g, "") // images
+    .replace(/\[(.*?)\]\(.*?\)/g, "$1") // links -> text
+    .replace(/[#*_`>~-]/g, "") // md symbols
+    .replace(/\s+/g, " ")
+    .trim();
+  return plain.length > maxLen ? plain.slice(0, maxLen).trim() + "…" : plain;
+}
+
+// Pulls a leading integer out of strings like "5 min read". Returns 0 if none found.
+export function parseReadTime(readtime?: string): number {
+  if (!readtime) return 0;
+  const match = readtime.match(/\d+/);
+  return match ? parseInt(match[0], 10) : 0;
+}
