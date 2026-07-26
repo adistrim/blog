@@ -12,6 +12,9 @@ const changa = Changa({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Aditya Raj | Blogs",
   description: "Notes on software, things I build, and things I find interesting.",
+  icons: {
+    icon: [{ url: "/me.webp", type: "image/webp" }],
+  },
 };
 
 export default function RootLayout({
